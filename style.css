@@ -530,3 +530,15 @@ body, html {
   .cart-toggle { margin-left: auto; margin-right: auto; }
 }
 
+
+.status-indicator.closed {
+  border-color: rgba(206, 17, 38, 0.5); /* red */
+  color: #ce1126;
+  text-shadow: none;
+  box-shadow: none;
+}
+.status-indicator.closed .blinker {
+  background: #ce1126;
+  box-shadow: none;
+  animation: none;
+}

@@ -177,7 +177,7 @@ function renderMenu() {
 }
 
 // Call initially
-document.addEventListener('DOMContentLoaded', initMenu);
+document.addEventListener('DOMContentLoaded', () => { initMenu(); loadStoreStatus(); });
 
 // Event Listeners
 cartToggle.addEventListener('click', toggleCart);
@@ -362,3 +362,32 @@ if(logoElement) {
 }
 
 
+
+
+// Fetch Status dynamically
+async function loadStoreStatus() {
+  const { data, error } = await supabase.from('status').select('*').single();
+  if (!error && data) {
+    const locElem = document.getElementById('storefrontLocation');
+    const indicator = document.getElementById('statusIndicator');
+    const text = document.getElementById('statusText');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    
+    if(locElem) locElem.textContent = data.location;
+    
+    if (data.is_open) {
+      indicator.className = 'status-indicator open';
+      text.textContent = 'OPEN';
+      if(checkoutBtn && cart.length > 0) checkoutBtn.disabled = false;
+    } else {
+      indicator.className = 'status-indicator closed';
+      text.textContent = 'CLOSED';
+      if(checkoutBtn) {
+        checkoutBtn.disabled = true;
+        checkoutBtn.textContent = 'Currently Closed for Pre-Orders';
+        checkoutBtn.style.opacity = '0.5';
+        checkoutBtn.style.cursor = 'not-allowed';
+      }
+    }
+  }
+}

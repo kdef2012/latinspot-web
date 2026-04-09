@@ -80,8 +80,26 @@
     <div class="admin-header">
       <h1>Latin Spot Analytics Hub</h1>
       <div style="display:flex; gap:1rem; align-items:center;">
-        <span style="color:#94a3b8">Status: <strong style="color:var(--neon-green)">Vercel/Supabase Ready</strong></span>
+        <span style="color:#94a3b8">Status: <strong style="color:var(--neon-green)">Live</strong></span>
         <button onclick="window.location.href='/'" class="checkout-btn" style="width:auto; padding:0.5rem 1rem;">Back to Store</button>
+      </div>
+    </div>
+
+    <!-- Live Command Center -->
+    <div class="status-controls" style="background:var(--bg-card); padding:1.5rem; border-radius:12px; margin-bottom:2rem; border:1px solid rgba(255,255,255,0.1); display:flex; gap:2rem; align-items:center; justify-content:space-between; flex-wrap:wrap;">
+      <div style="flex-grow:1; min-width:200px;">
+        <h3 style="margin:0 0 0.5rem; color:#94a3b8; font-size: 1rem;">Truck Location</h3>
+        <input type="text" id="adminLocationInput" placeholder="e.g. 1919 Silas Creek Pkwy" style="width:100%; padding:0.8rem; border-radius:6px; border:1px solid rgba(255,255,255,0.2); background:#1e293b; color:white; outline:none;" />
+      </div>
+      <div>
+        <h3 style="margin:0 0 0.5rem; color:#94a3b8; font-size: 1rem;">Store Status</h3>
+        <select id="adminStatusSelect" style="padding:0.8rem; border-radius:6px; border:1px solid rgba(255,255,255,0.2); background:#1e293b; color:white; width:150px; font-weight:bold; outline:none;">
+          <option value="true">OPEN</option>
+          <option value="false">CLOSED</option>
+        </select>
+      </div>
+      <div style="margin-top:1.5rem;">
+        <button onclick="window.updateStatus()" style="padding:0.8rem 2rem; background:var(--blue); color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold; white-space:nowrap;">Update Live</button>
       </div>
     </div>
 
@@ -124,4 +142,5 @@
     <script type="module" src="./admin.js"></script>
   </body>
 </html>
+
 

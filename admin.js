@@ -118,6 +118,30 @@ async function renderDashboard() {
   });
 }
 
+async function loadAdminStatus() {
+  const { data, error } = await supabase.from('status').select('*').single();
+  if(!error && data) {
+    document.getElementById('adminLocationInput').value = data.location;
+    document.getElementById('adminStatusSelect').value = data.is_open ? "true" : "false";
+  }
+}
+
+window.updateStatus = async function() {
+  const loc = document.getElementById('adminLocationInput').value;
+  const is_open = document.getElementById('adminStatusSelect').value === "true";
+  
+  const { error } = await supabase.from('status').update({ location: loc, is_open: is_open }).eq('id', 1);
+  if(error) {
+      console.error(error);
+      alert("Error saving status!");
+  } else {
+      alert("Live Storefront Updated Successfully!");
+  }
+}
+
+// Call inside renderDashboard:
+await loadAdminStatus();
 // Initialize
 renderDashboard();
+
 
