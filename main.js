@@ -374,6 +374,8 @@ async function loadStoreStatus() {
     const checkoutBtn = document.getElementById('checkoutBtn');
     
     if(locElem) locElem.textContent = data.location;
+    const linkElem = document.getElementById('storeLocationLink');
+    if(linkElem) linkElem.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(data.location);
     
     if (data.is_open) {
       indicator.className = 'status-indicator open';
@@ -391,3 +393,4 @@ async function loadStoreStatus() {
     }
   }
 }
+
