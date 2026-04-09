@@ -3,8 +3,7 @@
     rollupOptions: {
       input: {
         main: './index.html',
-        admin: './admin.html',
-        ar: './ar.html'
+        admin: './admin.html'
       }
     }
   }
