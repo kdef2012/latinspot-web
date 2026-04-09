@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -12,7 +12,7 @@
   <body>
     <!-- Video Onboarding Overlay -->
     <div id="onboardingOverlay" class="onboarding-overlay" onclick="enterSite()">
-      <video id="onboardingVideo" autoplay loop muted playsinline class="fullscreen-video">
+      <video id="onboardingVideo" autoplay muted playsinline class="fullscreen-video" onended="enterSite()">
         <source src="/Nextjs_Food_Truck_Onboarding_Animation.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
@@ -92,3 +92,4 @@
     </script>
   </body>
 </html>
+
