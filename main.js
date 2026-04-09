@@ -1,4 +1,9 @@
-﻿// Shopping Cart State
+﻿import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+const supabaseUrl = 'https://pccdkzzaeimkdttvkota.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjY2RrenphZWlta2R0dHZrb3RhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MjEwMjgsImV4cCI6MjA5MTI5NzAyOH0.KACVKSDVJTL9FXPK49oV_biJWbQ0STnmcdyx04qP1-A';
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+// Shopping Cart State
 let cart = [];
 const cartToggle = document.getElementById('cartToggle');
 const cartCount = document.getElementById('cartCount');
@@ -250,7 +255,7 @@ function updateCartUI() {
 }
 
 // Checkout and ETA Simulation (Supabase Mock)
-checkoutBtn.addEventListener('click', () => {
+checkoutBtn.addEventListener('click', async () => {
   if (cart.length === 0) {
     alert("Please add items to your cart first.");
     return;
@@ -265,7 +270,6 @@ checkoutBtn.addEventListener('click', () => {
   checkoutBtn.textContent = 'Sending Order...';
   checkoutBtn.style.opacity = '0.7';
   
-  // Simulate Supabase Insert: await supabase.from('orders').insert([{ ... }])
   const newOrder = {
     id: Date.now().toString(),
     items: [...cart],
@@ -274,10 +278,14 @@ checkoutBtn.addEventListener('click', () => {
     timestamp: new Date().toISOString()
   };
 
-  const existingData = localStorage.getItem('latinSpotMockOrders');
-  const allOrders = existingData ? JSON.parse(existingData) : [];
-  allOrders.push(newOrder);
-  localStorage.setItem('latinSpotMockOrders', JSON.stringify(allOrders));
+  const { data, error } = await supabase.from('orders').insert([newOrder]);
+  if (error) {
+      console.error(error);
+      alert("Error processing order. Please try again.");
+      checkoutBtn.textContent = 'Pre-Order Now';
+      checkoutBtn.style.opacity = '1';
+      return;
+  }
 
   setTimeout(() => {
     alert(`Success! Notification sent to Latin Spot. They expect you in ${eta}. ¡Buen provecho!`);
@@ -352,4 +360,5 @@ if(logoElement) {
         }
     });
 }
+
 

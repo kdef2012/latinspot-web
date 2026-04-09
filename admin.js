@@ -1,13 +1,15 @@
-// Mock Supabase Controller
-// In production on Vercel, this will be replaced with:
-// import { createClient } from '@supabase/supabase-js'
-// const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+﻿import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+const supabaseUrl = 'https://pccdkzzaeimkdttvkota.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjY2RrenphZWlta2R0dHZrb3RhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MjEwMjgsImV4cCI6MjA5MTI5NzAyOH0.KACVKSDVJTL9FXPK49oV_biJWbQ0STnmcdyx04qP1-A';
+const supabase = createClient(supabaseUrl, supabaseKey);
 
-function fetchSupabaseOrders() {
-  // Simulating a Supabase SELECT query
-  // Let { data, error } = await supabase.from('orders').select('*')
-  const data = localStorage.getItem('latinSpotMockOrders');
-  return data ? JSON.parse(data) : [];
+async function fetchSupabaseOrders() {
+  const { data, error } = await supabase.from('orders').select('*').order('created_at', { ascending: false });
+  if (error) {
+      console.error(error);
+      return [];
+  }
+  return data || [];
 }
 
 function processAnalytics(orders) {
@@ -35,8 +37,8 @@ function processAnalytics(orders) {
   return { totalRevenue, itemCounts, hourCounts, totalOrders: orders.length };
 }
 
-function renderDashboard() {
-  const orders = fetchSupabaseOrders();
+async function renderDashboard() {
+  const orders = await fetchSupabaseOrders();
   const analytics = processAnalytics(orders);
 
   // Update Top Metrics
@@ -118,3 +120,4 @@ function renderDashboard() {
 
 // Initialize
 renderDashboard();
+
