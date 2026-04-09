@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Latin Spot Admin Analytics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <!-- Chart.js for Analytics Visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        background-color: #0f172a;
+        padding: 2rem;
+      }
+      .admin-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        border-bottom: 2px solid var(--blue);
+        padding-bottom: 1rem;
+      }
+      .admin-header h1 { margin: 0; color: var(--neon-green); }
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+      .metric-card {
+        background: var(--bg-card);
+        padding: 1.5rem;
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,0.1);
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      }
+      .metric-card h3 { margin: 0 0 0.5rem 0; color: #94a3b8; font-size: 1rem;}
+      .metric-card .value { font-size: 2.5rem; font-weight: 700; color: var(--white); margin:0;}
+      
+      .charts-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+      .chart-card {
+        background: var(--bg-card);
+        padding: 1.5rem;
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,0.1);
+      }
+      
+      .live-orders {
+        margin-top: 2rem;
+        background: var(--bg-card);
+        padding: 1.5rem;
+        border-radius: 12px;
+        max-height: 400px;
+        overflow-y: auto;
+      }
+      
+      .order-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+      }
+      .order-row:last-child { border-bottom: none; }
+      .status-badge {
+        background: rgba(57, 255, 20, 0.2);
+        color: var(--neon-green);
+        padding: 0.2rem 0.6rem;
+        border-radius: 12px;
+        font-size: 0.8rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="admin-header">
+      <h1>Latin Spot Analytics Hub</h1>
+      <div style="display:flex; gap:1rem; align-items:center;">
+        <span style="color:#94a3b8">Status: <strong style="color:var(--neon-green)">Vercel/Supabase Ready</strong></span>
+        <button onclick="window.location.href='/'" class="checkout-btn" style="width:auto; padding:0.5rem 1rem;">Back to Store</button>
+      </div>
+    </div>
+
+    <!-- Top Level Metrics -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <h3>Total Revenue (Mock)</h3>
+        <p class="value" id="metric-revenue">$0</p>
+      </div>
+      <div class="metric-card">
+        <h3>Total Pre-Orders</h3>
+        <p class="value" id="metric-orders">0</p>
+      </div>
+      <div class="metric-card">
+        <h3>Unique Customers (ETA based)</h3>
+        <p class="value" id="metric-customers">0</p>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="charts-container">
+      <div class="chart-card">
+        <h3>Most Popular Items</h3>
+        <canvas id="itemsChart"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Traffic / Orders Time Frequency</h3>
+        <canvas id="trafficChart"></canvas>
+      </div>
+    </div>
+    
+    <!-- Live Feed -->
+    <div class="live-orders">
+      <h3>Recent Pre-Orders</h3>
+      <div id="ordersList">
+        <p style="color:#94a3b8">No orders yet. Place an order on the storefront to see it here!</p>
+      </div>
+    </div>
+
+    <script type="module" src="./admin.js"></script>
+  </body>
+</html>
+

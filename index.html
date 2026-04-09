@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Latin Spot</title>
+    <!-- Modern Google Font: Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <!-- Video Onboarding Overlay -->
+    <div id="onboardingOverlay" class="onboarding-overlay" onclick="enterSite()">
+      <video id="onboardingVideo" autoplay loop muted playsinline class="fullscreen-video">
+        <source src="/Nextjs_Food_Truck_Onboarding_Animation.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <nav class="navbar">
+      <div class="logo-container">
+        <img src="/actual_logo.webp" alt="Latin Spot Logo" class="logo" />
+        <div class="status-indicator open" id="statusIndicator">
+          <span class="blinker"></span>
+          <span id="statusText">OPEN</span>
+        </div>
+      </div>
+      <div class="header-info" id="headerInfo">
+        <div class="address">1919 Silas Creek Pkwy Winston-Salem, NC</div>
+        <div class="hours">🕚 Mon–Thurs 11AM–8PM | Fri–Sat 10AM–11PM | Sun 11AM-5PM</div>
+        <div class="phone">📞 336-283-5154</div>
+      </div>
+      <button class="cart-toggle" id="cartToggle">
+        Cart <span id="cartCount" class="cart-badge">0</span>
+      </button>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <h1>Sabor Que Te <span class="highlight">Transporta!</span></h1>
+        <p class="location-banner">
+          📍 Currently Parked: <strong>123 Main St, Plz</strong> 
+          <a href="#" class="map-link">(Google Maps)</a>
+        </p>
+      </section>
+
+      <section class="menu">
+        <h2 class="section-title">Our Menu</h2>
+        
+        <!-- Category Filter Bar -->
+        <div class="category-filters" id="categoryFilters">
+          <!-- Dynamically inserted buttons -->
+        </div>
+
+        <!-- Dynamic Menu Grid -->
+        <div class="menu-grid" id="menuGrid">
+          <!-- JavaScript will inject menu cards here -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+      <div class="cart-header">
+        <h2>Your Order</h2>
+        <button id="closeCart" class="close-btn">&times;</button>
+      </div>
+      <div class="cart-items" id="cartItems">
+        <p class="empty-cart">Your cart is empty.</p>
+      </div>
+      <div class="cart-footer">
+        <div class="cart-total-row">
+          <h3>Total</h3>
+          <h3 class="total-amount">$<span id="cartTotal">0.00</span></h3>
+        </div>
+        <div class="eta-container">
+          <label for="eta">Estimated Arrival Time (ETA):</label>
+          <input type="text" id="eta" placeholder="e.g. 15 mins" />
+        </div>
+        <button id="checkoutBtn" class="checkout-btn">Pre-Order Now</button>
+      </div>
+    </div>
+
+    <script type="module" src="/main.js"></script>
+    <script>
+      // Make addToCart globally accessible for inline onclick
+      window.addToCart = function(name, price) {
+        window.dispatchEvent(new CustomEvent('cart-add', { detail: { name, price } }));
+      }
+    </script>
+  </body>
+</html>
